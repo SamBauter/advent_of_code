@@ -37,7 +37,12 @@ def compute(s: str) -> int:
         else:
             seen.add(val)
 
+x = lambda s: eval(f'({total_s})')
+
+
+
 if __name__ == '__main__':
     print(find_total())
     print(find_repeat())
     print(compute(total_s))
+    print(x(total_s))
