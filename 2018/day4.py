@@ -77,7 +77,7 @@ def test_sleepiest(input_dict):
 
 def find_minute(input_dict):
     sleepiest_id = find_sleepiest(input_dict)
-    minute = Counter(input_dict[sleepiest_id]).most_common(1)[0][1]
+    minute = Counter(input_dict[sleepiest_id]).most_common(1)[0][0]
     return minute
 
 
@@ -86,22 +86,16 @@ with open('2018/d4-input.txt','r') as fin:
     while line :=fin.readline():
         new_entry = LogEntry(line)
         log_list1.append(new_entry)
-#print(len(log_list1))
 
 log_list1.sort(key = lambda x: x.entry_time)
 assign_id(log_list1)
 
-#print([(x.guard_id,x.entry_time) for x in log_list1[:10]])
 the_dict=guard_dict(log_list1)
 
 print(find_sleepiest(the_dict))
 print(find_minute(the_dict))
 
-#print(the_dict['3299'])
-#print(Counter(the_dict['3299']).most_common(3))
-#print(test_sleepiest(the_dict))
-
-#print(find_minute_times_id(the_dict))
+print(f"The Solution is: {int(find_sleepiest(the_dict))*find_minute(the_dict)}")
 
 
 
