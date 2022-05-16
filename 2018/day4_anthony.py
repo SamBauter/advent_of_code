@@ -78,7 +78,7 @@ def compute(s: str) -> int:
         asleep_times.update(range(duration.start, duration.end))
 
     (sleepiest_minute, _), = asleep_times.most_common(1)
-    return sleepiest_minute
+    return sleepiest * sleepiest_minute
 
 with open('2018/d4-input.txt','r') as f:
     s = f.read()

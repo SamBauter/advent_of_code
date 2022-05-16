@@ -95,7 +95,27 @@ def get_sleepy_minute(g_dict,sleepy_guard):
 
 sleepy_guard = get_sleepy_guard(m_slept)
 sleepy_minute = get_sleepy_minute(g_dict, sleepy_guard)
-print(int(sleepy_guard)*sleepy_minute)
+#print(int(sleepy_guard)*sleepy_minute)
+
+"""PART 2"""
+def most_occurent_minute(g_dict):
+    highest_min_occurences = 0
+    minute_name = -1
+    guard_name = ''
+    for guard, min_list in g_dict.items():
+        ccount = Counter(min_list)
+        most_com = ccount.most_common(1)
+        minute_value = most_com[0][0]
+        number_of_times = most_com[0][1]
+        if number_of_times > highest_min_occurences:
+            minute_name = minute_value
+            highest_min_occurences = number_of_times
+            guard_name = guard
+    return minute_name*int(guard_name)
+
+print(most_occurent_minute(g_dict))
+
+
 
 
 
