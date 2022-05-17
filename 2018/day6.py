@@ -1,4 +1,5 @@
 from itertools import chain
+import sys
 
 with open('2018/d6-input.txt', 'r')as f:
     s= f.read()
@@ -83,53 +84,29 @@ def find_max_area(s):
 """PART 2"""
 def safe_zone_eff(s,tolerance):
     coords = get_coord_list(s)
-    mins = []
-    maxes = []
+    min_x, min_y = (sys.maxsize,sys.maxsize)
+    max_x, max_y = (0,0)
+
     for coord in coords:
         x,y = coord
-        mins.append((x-tolerance,y-tolerance))
-        maxes.append((x+tolerance,y+tolerance))
-    biggest_x_min = max(min[0] for min in mins)
-    biggest_y_min = max(min[1] for min in mins)
-    smallest_x_max = min(max[0] for max in maxes)
-    smallest_y_max = min(max[1] for max in maxes)
-    area = 0
-    for x_val in range(biggest_x_min,smallest_x_max+1):
-        for y_val in range(biggest_y_min,smallest_y_max+1):
-            all_passed = True
-            for coord in coords:
-                if manhattan_dist((x_val,y_val),coord)<tolerance:
-                    continue
-                else:
-                    all_passed = False
-                    break
-            if all_passed == True:
-                area+=1
-    return area
-
-
+        max_x, max_y = max(x,max_x) , max(y,max_y)
+        min_x, min_y = min(x,min_x) , min(y,min_y)
     
-
-def safe_zone(s):
-    coords = get_coord_list(s)
-    x_bounds, y_bounds = find_maxes_mins(coords)
-    largest_x_range = range(x_bounds[0]-10000,x_bounds[1]+10000+1)
-    largest_y_range = range(y_bounds[0]-10000,y_bounds[1]+10000+1)
     area = 0
-    for y in largest_y_range:
-        for x in largest_x_range:
-            all_passed = True
+    adj = tolerance // len(coords)
+    
+    for x_val in range(min_x-adj,max_x+adj):
+        for y_val in range(min_y-adj,max_y+adj):
+            total_distance = 0
             for coord in coords:
-                if manhattan_dist((x,y),coord)<10000:
-                    continue
-                else:
-                    all_passed = False
-                    break
-            if all_passed == True:
+                total_distance +=manhattan_dist(coord,(x_val,y_val))
+            if total_distance<tolerance:
                 area+=1
     return area
+     
+ 
             
-print(safe_zone_eff(s,1000))
+print(safe_zone_eff(s,10000))
 
 
     
