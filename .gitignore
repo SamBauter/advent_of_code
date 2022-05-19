@@ -1,3 +1,5 @@
 *.vscode
 *.pyc
 
+*.pyc
+2018/__pycache__/*
